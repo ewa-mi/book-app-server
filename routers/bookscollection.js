@@ -32,7 +32,7 @@ router.get("/", (req, res, next) => {
     offset,
   })
     .then((result) =>
-      res.send({ bookcollections: result.rows, total: result.count })
+      res.send({ bookscollections: result.rows, total: result.count })
     )
     .catch((error) => next(error));
 });

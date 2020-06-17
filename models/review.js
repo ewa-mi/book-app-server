@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "review",
     {
       title: DataTypes.STRING,
-      content: DataTypes.STRING,
+      content: DataTypes.STRING(65535),
       likes: DataTypes.INTEGER,
     },
     {}
