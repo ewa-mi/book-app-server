@@ -3,10 +3,12 @@ const app = express();
 const authRouter = require("./routers/auth");
 const { PORT } = require("./config/constants");
 const cors = require("cors");
+const loggerMiddleWare = require("morgan");
 const bodyParserMiddleWare = express.json();
 const bookscollectionRouter = require("./routers/bookscollection");
 const userRouter = require("./routers/user");
 
+app.use(loggerMiddleWare("dev"));
 app.use(bodyParserMiddleWare);
 app.use(cors());
 
