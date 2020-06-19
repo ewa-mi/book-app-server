@@ -15,6 +15,7 @@ router.get("/user/:id", async (req, res) => {
       },
       include: [User],
     });
+
     return res.send(collections);
   } catch (error) {
     console.log(error);
@@ -30,8 +31,15 @@ router.post("/post", auth, async (req, res) => {
       userId: userId,
       name: name,
     });
-    const coll = await Collection.findAll();
-    return res.status(200).send(coll);
+
+    const collections = await Collection.findAll({
+      where: {
+        userId: userId,
+      },
+      include: [User],
+    });
+
+    return res.status(200).send(collections);
   } catch (error) {
     console.log(error);
     return res.status(400).send({ message: "Something went wrong" });
