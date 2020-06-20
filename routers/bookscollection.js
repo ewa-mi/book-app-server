@@ -37,4 +37,20 @@ router.get("/", (req, res, next) => {
     .catch((error) => next(error));
 });
 
+router.get("/collection/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const booksCollections = await BooksCollection.findAll({
+      where: {
+        collectionId: id,
+      },
+      include: [Book, Collection],
+    });
+    return res.send(booksCollections);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong" });
+  }
+});
+
 module.exports = router;
