@@ -6,6 +6,22 @@ const auth = require("../auth/middleware");
 
 const router = new Router();
 
+router.get("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const collections = await Collection.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    return res.send(collections);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong" });
+  }
+});
+
 router.get("/user/:id", async (req, res) => {
   try {
     const id = req.params.id;
