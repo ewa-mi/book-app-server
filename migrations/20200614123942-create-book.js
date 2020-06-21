@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       ISBN: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       category: {
         type: Sequelize.STRING,
