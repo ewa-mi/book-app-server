@@ -63,4 +63,44 @@ router.post("/post", auth, async (req, res) => {
   }
 });
 
+router.patch("/likes", async (req, res) => {
+  try {
+    const { id, likes } = req.body;
+
+    await Review.update(
+      {
+        likes: likes,
+      },
+      { where: { id } }
+    );
+
+    const booksCollection = await BooksCollection.findAll({
+      where: {
+        reviewId: id,
+      },
+      include: [
+        {
+          model: Book,
+        },
+        {
+          model: Review,
+        },
+        {
+          model: Collection,
+          include: [
+            {
+              model: User,
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.status(200).send(booksCollection);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong" });
+  }
+});
+
 module.exports = router;
