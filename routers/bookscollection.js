@@ -62,7 +62,22 @@ router.get("/book/:id", async (req, res) => {
       where: {
         bookId: id,
       },
-      include: [Book, Review],
+      include: [
+        {
+          model: Book,
+        },
+        {
+          model: Review,
+        },
+        {
+          model: Collection,
+          include: [
+            {
+              model: User,
+            },
+          ],
+        },
+      ],
     });
     return res.send(booksCollections);
   } catch (error) {
