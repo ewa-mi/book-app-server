@@ -55,12 +55,15 @@ router.get("/collection/:id", async (req, res) => {
   }
 });
 
-router.get("/book/:id", async (req, res) => {
+router.get("/book/:collectionId/:bookId", async (req, res) => {
   try {
-    const id = req.params.id;
+    const collectionId = req.params.collectionId;
+    const bookId = req.params.bookId;
+
     const booksCollections = await BooksCollection.findOne({
       where: {
-        bookId: id,
+        collectionId: collectionId,
+        bookId: bookId,
       },
       include: [
         {
