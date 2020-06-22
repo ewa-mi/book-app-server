@@ -14,6 +14,7 @@ router.get("/", (req, res, next) => {
   const offset = parseInt(req.query.offset) || 0;
 
   BooksCollection.findAndCountAll({
+    order: [["reviewId", "DESC"]],
     include: [
       {
         model: Book,
@@ -47,6 +48,40 @@ router.get("/collection/:id", async (req, res) => {
         collectionId: id,
       },
       include: [Book, Collection],
+    });
+    return res.send(booksCollections);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong" });
+  }
+});
+
+router.get("/book/:collectionId/:bookId", async (req, res) => {
+  try {
+    const collectionId = req.params.collectionId;
+    const bookId = req.params.bookId;
+
+    const booksCollections = await BooksCollection.findOne({
+      where: {
+        collectionId: collectionId,
+        bookId: bookId,
+      },
+      include: [
+        {
+          model: Book,
+        },
+        {
+          model: Review,
+        },
+        {
+          model: Collection,
+          include: [
+            {
+              model: User,
+            },
+          ],
+        },
+      ],
     });
     return res.send(booksCollections);
   } catch (error) {
