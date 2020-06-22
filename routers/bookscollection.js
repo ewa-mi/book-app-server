@@ -55,6 +55,22 @@ router.get("/collection/:id", async (req, res) => {
   }
 });
 
+router.get("/book/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const booksCollections = await BooksCollection.findOne({
+      where: {
+        bookId: id,
+      },
+      include: [Book, Review],
+    });
+    return res.send(booksCollections);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong" });
+  }
+});
+
 router.post("/post", auth, async (req, res) => {
   try {
     const {
