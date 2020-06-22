@@ -14,6 +14,7 @@ router.get("/", (req, res, next) => {
   const offset = parseInt(req.query.offset) || 0;
 
   BooksCollection.findAndCountAll({
+    order: [["reviewId", "DESC"]],
     include: [
       {
         model: Book,
