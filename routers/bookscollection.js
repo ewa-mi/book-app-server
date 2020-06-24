@@ -91,19 +91,25 @@ router.get("/book/:collectionId/:bookId", async (req, res) => {
 });
 
 router.post("/post", auth, async (req, res) => {
-  try {
-    const {
-      title,
-      author,
-      image,
-      isbn,
-      category,
-      description,
-      rating,
-      userId,
-      collectionId,
-    } = req.body;
+  const {
+    title,
+    author,
+    image,
+    isbn,
+    category,
+    description,
+    rating,
+    userId,
+    collectionId,
+  } = req.body;
 
+  if (!title || !author || !image) {
+    return res
+      .status(400)
+      .send({ message: "Please provide at least title, author and url image" });
+  }
+
+  try {
     await Book.create({
       title: title,
       author: author,

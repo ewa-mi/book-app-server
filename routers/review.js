@@ -10,9 +10,13 @@ const auth = require("../auth/middleware");
 const router = new Router();
 
 router.post("/post", auth, async (req, res) => {
+  const { reviewTitle, reviewContent, bookId, collectionId } = req.body;
+  if (!reviewTitle && !reviewContent) {
+    return res
+      .status(400)
+      .send({ message: "Please provide review title and content" });
+  }
   try {
-    const { reviewTitle, reviewContent, bookId, collectionId } = req.body;
-
     await Review.create({
       title: reviewTitle,
       content: reviewContent,

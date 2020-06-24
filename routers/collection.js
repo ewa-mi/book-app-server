@@ -40,9 +40,13 @@ router.get("/user/:id", async (req, res) => {
 });
 
 router.post("/post", auth, async (req, res) => {
-  try {
-    const { userId, name } = req.body;
+  const { userId, name } = req.body;
 
+  if (!name) {
+    return res.status(400).send({ message: "Please provide collection name" });
+  }
+
+  try {
     await Collection.create({
       userId: userId,
       name: name,
