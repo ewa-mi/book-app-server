@@ -94,7 +94,7 @@ module.exports = {
           rating: 5,
           createdAt: new Date(),
           updatedAt: new Date(),
-          collectionId: collection3.id,
+          collectionId: collection1.id,
           bookId: book4.id,
           reviewId: review1.id,
         },
